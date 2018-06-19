@@ -1,5 +1,8 @@
-* Record
-  
+Record
+------
+
+Record has the following attibutes:
+
   name 
     Record name.
 
@@ -14,3 +17,8 @@
 
   alias
     List of aliased names.
+
+Database
+--------
+
+Database derives from OrderedDict. The key is the record name and the value the *Record* instance.
