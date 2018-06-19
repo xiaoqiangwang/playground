@@ -1,5 +1,5 @@
-Record
-------
+Reference
+---------
 
 Record has the following attibutes:
 
@@ -18,7 +18,5 @@ Record has the following attibutes:
   alias
     List of aliased names.
 
-Database
---------
 
 Database derives from OrderedDict. The key is the record name and the value the *Record* instance.
