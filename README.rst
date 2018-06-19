@@ -1,21 +1,16 @@
-.. class:: Record
+* Record
+  
+  name 
+    Record name.
 
-   .. attribute:: name
-      
-      Record name.
+  rtyp
+    Record type.
 
-   .. attribute:: rtyp
+  field
+    Dictionary of record fields.
 
-      Record type.
+  info
+    Dictionary of record infos.
 
-   .. attribute:: field
-
-      Dictionary of record fields.
-
-   .. attribute:: info
-
-      Dictionary of record infos.
-
-   .. attribute:: alias
-      
-      List of aliased names.
+  alias
+    List of aliased names.
