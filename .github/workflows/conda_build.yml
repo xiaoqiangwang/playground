@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    name: conda build (${{ matrix.python-version }}, ${{ matrix.os }})
+    name: conda build (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -19,8 +19,8 @@ jobs:
     steps:
       - uses: conda-incubator/setup-miniconda@v2
         with:
-          auto-update-conda: true
-          python-version: ${{ matrix.python-version }}
+          auto-update-conda: false
+          conda-build-version: "latest"
       - name: Conda info
         shell: bash -l {0}
         run: conda info
