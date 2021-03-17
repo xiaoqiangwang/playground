@@ -28,7 +28,7 @@ jobs:
         shell: bash -l {0}
         run: | 
             mkdir packages
-            conda build --output-folder packages
+            conda build --output-folder packages conda-recipe
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
