@@ -41,5 +41,5 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          path: packages/*.tar.bz2
+          path: packages/*/*.tar.bz2
           retention-days: 1
