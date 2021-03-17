@@ -19,7 +19,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Setup miniconda
+      - name: Debug paths
+        shell: bash -l {0}
+        run: |
+            printenv
+            pwd
+            ls
+       - name: Setup miniconda
         uses: conda-incubator/setup-miniconda@v2
         with:
           auto-update-conda: false
@@ -30,6 +36,8 @@ jobs:
       - name: Build
         shell: bash -l {0}
         run: | 
+            pwd
+            ls
             mkdir packages
             conda build --output-folder packages conda-recipe
       - name: Upload Artifact
