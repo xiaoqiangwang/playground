@@ -19,7 +19,7 @@ requirements:
     - python
 
 build:
-  script: python setup.py install --single-version-externally-managed --record=record.txt
+  script: python setup.py build_ext install --single-version-externally-managed --record=record.txt
 
 test:
   imports:
