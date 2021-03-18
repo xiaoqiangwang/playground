@@ -34,13 +34,13 @@ jobs:
         shell: bash -l {0}
         run: conda info
       - name: Build
-        if: env.RUNNER_OS != "Linux"
+        if: env.RUNNER_OS != 'Linux'
         shell: bash -l {0}
         run: | 
             mkdir packages
             conda build --output-folder packages conda-recipe
       - name: Build
-        if: env.RUNNER_OS == "Linux"
+        if: env.RUNNER_OS == 'Linux'
         shell: bash -l {0}
         run: |
             mkdir packages
