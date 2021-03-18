@@ -34,14 +34,17 @@ jobs:
         shell: bash -l {0}
         run: conda info
       - name: Build
+        if: env.RUNNER_OS != "Linux"
         shell: bash -l {0}
         run: | 
             mkdir packages
-            if [[ ${RUNNER_OS} == "Linux" ]]; then \
-              ./scripts/conda_build_in_docker.sh conda-recipe packages;\
-            else \
-              conda build --output-folder packages conda-recipe;
-
+            conda build --output-folder packages conda-recipe
+      - name: Build
+        if: env.RUNNER_OS == "Linux"
+        shell: bash -l {0}
+        run: |
+            mkdir packages
+            .scripts/conda_build_in_docker.sh conda-recipe packages
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
