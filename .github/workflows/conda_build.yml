@@ -49,7 +49,7 @@ jobs:
             printenv
             pwd
             ls -al
-            conda build --output-folder packages conda-recipe
+            conda build --output-folder packages .
       - name: Build
         if: runner.os == 'linux'
         shell: bash -l {0}
