@@ -35,8 +35,7 @@ jobs:
         shell: bash -l {0}
         run: |
             sudo xcode-select -s "/Applications/Xcode_11.7.app"
-            xcode-select -p
-            echo "DEVELOPER_DIR=/Applications/Xcode_11.7.app/Contents/Developer" >> $GITHUB_ENV
+            #echo "DEVELOPER_DIR=/Applications/Xcode_11.7.app/Contents/Developer" >> $GITHUB_ENV
             CONDA_BUILD_SYSROOT="$(xcode-select -p)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk"
             [[ -e /opt/MacOSX10.9.sdk ]] || sudo ln -s ${CONDA_BUILD_SYSROOT} /opt/MacOSX10.9.sdk
             printf "CONDA_BUILD_SYSROOT:\n    - ${CONDA_BUILD_SYSROOT}\n" >> conda-recipe/conda_build_config.yaml
@@ -44,17 +43,14 @@ jobs:
         shell: bash -l {0}
         run: conda info
       - name: Build
-        if: env.RUNNER_OS != 'Linux'
+        if: runner.os == 'macOS'
         shell: bash -l {0}
         run: | 
             mkdir packages
             printenv
-            xcode-select -p
-            #sudo xcode-select -r
-            #xcode-select -p
             conda build --output-folder packages conda-recipe
       - name: Build
-        if: env.RUNNER_OS == 'Linux'
+        if: runner.os == 'linux'
         shell: bash -l {0}
         run: |
             mkdir packages
