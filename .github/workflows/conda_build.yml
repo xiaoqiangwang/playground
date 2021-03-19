@@ -49,7 +49,7 @@ jobs:
             printenv
             pwd
             ls -al
-            conda build --output-folder packages .
+            conda build --output-folder packages conda-recipe
       - name: Build
         if: runner.os == 'linux'
         shell: bash -l {0}
@@ -58,7 +58,7 @@ jobs:
             printenv
             pwd
             ls -al
-            .scripts/conda_build_in_docker.sh conda-recipe packages
+            .scripts/conda_build_in_docker.sh . packages
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
