@@ -48,7 +48,7 @@ jobs:
         shell: bash -l {0}
         run: | 
             mkdir packages
-            xcode-select -r
+            sudo xcode-select -r
             cat conda-recipe/conda_build_config.yaml
             conda build --output-folder packages conda-recipe
       - name: Build
