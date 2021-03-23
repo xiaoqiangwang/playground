@@ -54,7 +54,7 @@ jobs:
         if: runner.os == 'linux'
         uses: docker://condaforge/linux-anvil:latest
         with:
-            args: conda config --add channels defaults;conda info;cd /github/workspace;mkdir packages;conda build --output-folder packages conda-recipe
+            args: bash -c "conda config --add channels defaults;conda info;cd /github/workspace;mkdir packages;conda build --output-folder packages conda-recipe"
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
