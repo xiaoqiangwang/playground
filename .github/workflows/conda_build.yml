@@ -52,7 +52,7 @@ jobs:
             conda build --output-folder packages conda-recipe
       - name: Build
         if: runner.os == 'linux'
-        uses: condaforge/linux-anvil:latest
+        uses: docker://condaforge/linux-anvil:latest
         with:
             args: conda build conda-recipe
       - name: Upload Artifact
