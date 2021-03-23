@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: ["ubuntu-latest", "macos-latest"]
+        os: ["ubuntu-latest"]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -52,13 +52,13 @@ jobs:
             conda build --output-folder packages conda-recipe
       - name: Build
         if: runner.os == 'linux'
-        shell: bash -l {0}
+        uses: condaforge/linux-anvil:latest
         run: |
             mkdir packages
             printenv
             pwd
             ls -al
-            .scripts/conda_build_in_docker.sh . packages
+            conda build --output-folder packages conda-recipe
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
