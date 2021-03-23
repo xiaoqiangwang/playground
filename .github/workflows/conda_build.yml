@@ -53,12 +53,8 @@ jobs:
       - name: Build
         if: runner.os == 'linux'
         uses: condaforge/linux-anvil:latest
-        run: |
-            mkdir packages
-            printenv
-            pwd
-            ls -al
-            conda build --output-folder packages conda-recipe
+        with:
+            args: conda build conda-recipe
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
