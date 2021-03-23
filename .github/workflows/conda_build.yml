@@ -9,40 +9,29 @@ on:
       - "master"
 
 jobs:
-  Linux:
-    name: conda build in conda-forge-anvil docker
-    runs-on: "ubuntu-latest"
-    container: condaforge/linux-anvil:latest
+  build:
+    name: conda build (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["ubuntu-latest", "macos-latest"]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Conda info
-        shell: bash -l {0}
-        run: conda info
-      - name: Build
+      - name: Debug paths
         shell: bash -l {0}
         run: |
-            ls
+            printenv
             pwd
-            mkdir packages
-            conda build --output-folder packages conda-recipe
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          path: packages/*/*.tar.bz2
-          retention-days: 1
-  macOS:
-    name: conda build
-    runs-on: "macos-latest"
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+            ls -al
       - name: Setup miniconda
         uses: conda-incubator/setup-miniconda@v2
         with:
           auto-update-conda: false
           conda-build-version: 3
-      - name: Setup Xcode and SDK
+      - name: Setup Xcode and SDK on macOS
+        if: runner.os == 'macOS'
         shell: bash -l {0}
         run: |
             sudo xcode-select -s "/Applications/Xcode_11.7.app"
@@ -53,10 +42,23 @@ jobs:
         shell: bash -l {0}
         run: conda info
       - name: Build
+        if: runner.os == 'macOS'
         shell: bash -l {0}
         run: | 
             mkdir packages
+            printenv
+            pwd
+            ls -al
             conda build --output-folder packages conda-recipe
+      - name: Build
+        if: runner.os == 'linux'
+        shell: bash -l {0}
+        run: |
+            mkdir packages
+            printenv
+            pwd
+            ls -al
+            .scripts/conda_build_in_docker.sh . packages
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
