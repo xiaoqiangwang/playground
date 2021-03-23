@@ -54,7 +54,7 @@ jobs:
         if: runner.os == 'linux'
         uses: docker://condaforge/linux-anvil:latest
         with:
-            args: conda build conda-recipe
+            args: conda build /github/workspace/conda-recipe
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
