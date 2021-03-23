@@ -23,6 +23,8 @@ jobs:
         shell: bash -l {0}
         run: |
             printenv
+            whoami
+            id
             pwd
             ls -al
       - name: Setup miniconda
@@ -54,7 +56,7 @@ jobs:
         if: runner.os == 'linux'
         uses: docker://condaforge/linux-anvil:latest
         with:
-            args: bash -c "conda config --add channels defaults;conda info;cd /github/workspace;mkdir packages;conda build --output-folder packages conda-recipe"
+            args: bash -c "whoami;id;ls -la;conda config --add channels defaults;conda info;cd /github/workspace;mkdir packages;conda build --output-folder packages conda-recipe"
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
