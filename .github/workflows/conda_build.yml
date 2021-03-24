@@ -29,7 +29,6 @@ jobs:
       - name: Setup miniconda
         uses: conda-incubator/setup-miniconda@v2
         with:
-          auto-activate-base: true
           auto-update-conda: false
           conda-build-version: 3
       - name: Setup Xcode and SDK on macOS
@@ -39,8 +38,11 @@ jobs:
             CONDA_BUILD_SYSROOT="$(xcode-select -p)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk"
             [[ -e /opt/MacOSX10.9.sdk ]] || sudo ln -s ${CONDA_BUILD_SYSROOT} /opt/MacOSX10.9.sdk
             printf "CONDA_BUILD_SYSROOT:\n    - ${CONDA_BUILD_SYSROOT}\n" >> conda-recipe/conda_build_config.yaml
-      - name: Conda info
-        run: conda info
+      - name: Activate conda
+        run: |
+            conda activate base
+            conda install anaconda-client
+            conda info
       - name: Build ${{ runner.os }}
         if: runner.os == 'macOS'
         run: |
@@ -55,7 +57,6 @@ jobs:
           HOST_USER_ID: ${{ env.USER_ID }}
       - name: Upload Anaconda
         run: |
-            conda install anaconda-client
             anaconda -t ${MY_CONDA_TOLKEN} upload --force packages/*/*.tar.bz2
         env:
             MY_CONDA_TOKEN: ${{ secrets.MY_CONDA_TOKEN }}
