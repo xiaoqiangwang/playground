@@ -29,7 +29,7 @@ jobs:
       - name: Setup miniconda
         uses: conda-incubator/setup-miniconda@v2
         with:
-          activate-environment: "base"
+          auto-activate-base: true
           auto-update-conda: false
           conda-build-version: 3
       - name: Setup Xcode and SDK on macOS
