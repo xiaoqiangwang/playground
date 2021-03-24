@@ -57,7 +57,7 @@ jobs:
       - name: Upload Anaconda
         run: |
             conda activate test
-            anaconda -t ${MY_CONDA_TOLKEN} upload --force packages/*/*.tar.bz2
+            anaconda -t ${MY_CONDA_TOKEN} upload --force packages/*/*.tar.bz2
         env:
             MY_CONDA_TOKEN: ${{ secrets.MY_CONDA_TOKEN }}
       - name: Upload Artifact
