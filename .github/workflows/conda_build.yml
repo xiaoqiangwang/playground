@@ -58,7 +58,7 @@ jobs:
             anaconda -v -t ${MY_CONDA_TOKEN} upload -l main --force packages/*/*.tar.bz2
         env:
           MY_CONDA_TOKEN: ${{ secrets.MY_CONDA_TOKEN }}
-        if: ${{ secrets.MY_CONDA_TOKEN }}
+        if: secrets.MY_CONDA_TOKEN
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
