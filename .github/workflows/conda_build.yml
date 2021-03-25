@@ -31,6 +31,7 @@ jobs:
         with:
           auto-update-conda: false
           conda-build-version: 3
+          activate-environment: ""
       - name: Setup Xcode and SDK on macOS
         if: runner.os == 'macOS'
         run: |
@@ -40,8 +41,8 @@ jobs:
             printf "CONDA_BUILD_SYSROOT:\n    - ${CONDA_BUILD_SYSROOT}\n" >> conda-recipe/conda_build_config.yaml
       - name: Activate conda
         run: |
-            conda install anaconda-client
             conda info
+            conda install anaconda-client
       - name: Build ${{ runner.os }}
         if: runner.os == 'macOS'
         run: |
@@ -51,17 +52,18 @@ jobs:
         if: runner.os == 'linux'
         uses: docker://condaforge/linux-anvil:latest
         with:
-            args: bash -c "whoami;id;ls -la /github/workspace;conda config --add channels defaults;conda info;cd /github/workspace;mkdir packages;conda build --output-folder packages conda-recipe"
+          args: bash -c "whoami;id;ls -la /github/workspace;conda config --add channels defaults;conda info;cd /github/workspace;mkdir packages;conda build --output-folder packages conda-recipe"
         env:
           HOST_USER_ID: ${{ env.USER_ID }}
       - name: Upload Anaconda
         run: |
-            conda activate test
+            conda info
+            conda activate base
             ls -la packages/*/*.tar.bz2
             id
             anaconda -v -t ${MY_CONDA_TOKEN} upload -l main --force packages/*/*.tar.bz2
         env:
-            MY_CONDA_TOKEN: ${{ secrets.MY_CONDA_TOKEN }}
+          MY_CONDA_TOKEN: ${{ secrets.MY_CONDA_TOKEN }}
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
