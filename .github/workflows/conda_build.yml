@@ -36,8 +36,10 @@ jobs:
       - name: Setup Xcode and SDK on macOS
         if: runner.os == 'macOS'
         run: |
-            curl -OL https://github.com/phracker/MacOSX-SDKs/releases/download/10.15/MacOSX10.9.sdk.tar.xz
-            sudo tar xf MacOSX10.9.sdk.tar.xz -C /opt
+            MACOS_SDK=MacOSX10.9.sdk
+            curl -OL https://github.com/phracker/MacOSX-SDKs/releases/download/10.15/${MACOS_SDK}.tar.xz
+            sudo tar xf ${MACOS_SDK}.tar.xz -C /opt
+            printf "CONDA_BUILD_SYSROOT:\n    - /opt/${MACOS_SDK}\n" >> conda-recipe/conda_build_config.yaml
       - name: Build macOS
         if: runner.os == 'macOS'
         run: |
