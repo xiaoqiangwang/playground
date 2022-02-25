@@ -47,7 +47,7 @@ jobs:
             conda build --output-folder packages conda-recipe
       - name: Build Linux
         if: runner.os == 'linux'
-        uses: docker://condaforge/linux-anvil:latest
+        uses: docker://condaforge/linux-anvil-comp7:latest
         with:
           args: bash -c "conda info;cd /github/workspace;mkdir packages;conda build --output-folder packages conda-recipe"
         env:
